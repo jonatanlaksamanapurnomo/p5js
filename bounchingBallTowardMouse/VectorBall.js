@@ -1,15 +1,11 @@
 class VectorBall{
     //making boucnhing ball with vector
     constructor(){
-        //a constructor for our object
-        this.r = 15;
         this.location = createVector(width/2 , height/2);
-       //for the first time set accelaration and velocity to 0 as we see in the real world
         this.acc = createVector();
         this.velocity = createVector();
-        //a limit speed that we could have
-        this.topSpeed =10;
-
+        this.topspeed =10;
+        this.r = 15;
 
 
     }
@@ -19,14 +15,16 @@ class VectorBall{
 
     }
     update(){
-        //make a random angle and make random acc for this random angle hehehe
-         var angle = random(TWO_PI);
-         this.acc = createVector(cos(angle) , sin(angle));
+        // Compute a vector that points from position to mouse
+        var mouse = createVector(mouseX,mouseY);
+        mouse.sub(this.location);
+        this.acc = mouse;
+        // Set magnitude of acceleration
+        this.acc.setMag(0.2);
 
-        //simply we can use add method in vector and veloctiy + acc this is what we saw in real world right
         this.velocity.add(this.acc);
+        this.velocity.limit(this.topspeed);
         this.location.add(this.velocity);
-        this.velocity.limit(this.topSpeed);
         if(this.location.x  <= 0 || this.location.x >= width){
             this.velocity.x*= -1;
 
